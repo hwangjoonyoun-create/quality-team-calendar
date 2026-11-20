@@ -73,7 +73,9 @@
 .member-row>*{height:26px}
 .member-row td{padding-block:1px}
 .slot{height:22px}
-.chip{padding-block:2px}
+.chip{padding-block:2px;border-radius:5px 5px 0 0;box-shadow:inset 0 -1px color-mix(in srgb,var(--kind,#e9eef6) 75%,#243041)}
+.member-row>*,.member-row th{background:color-mix(in srgb,var(--person,#f0f5ff) 70%,white)}
+.member-row td.outside{background:#f8fafd}
 .read-only .member-row td,.read-only .manage-button{cursor:default}
 .read-only .chip:hover{filter:none}
 .read-only .manage-button:hover{background:transparent}
@@ -104,6 +106,6 @@
   <section class="popup" id="popup" role="dialog" aria-labelledby="popup-title" hidden><div class="popup-head"><h2 id="popup-title"></h2><button class="close" id="close-popup" type="button" aria-label="닫기">×</button></div><form class="fields" id="event-form"><div class="event-fields"><label class="field">일정 종류<select id="type" required></select></label><label class="field" id="detail-field" hidden><span id="detail-label"></span><input id="detail" type="text" maxlength="60" autocomplete="off"></label></div><div class="actions"><button class="button secondary-add" type="button" id="another-event" hidden>다른 일정 입력</button><button class="button danger" type="button" id="delete-event" hidden>삭제</button><button class="button primary" id="save-event" type="submit">저장</button></div></form></section>
   <dialog class="modal" id="members" aria-labelledby="members-title"><div class="popup-head"><h2 id="members-title">팀원 관리</h2><button class="close" id="close-members" type="button" aria-label="닫기">×</button></div><div id="member-rows"></div><form class="add-member" id="member-form"><label class="field">팀원 이름<input id="member-name" maxlength="22" required autocomplete="off"></label><label class="field">배경색<select id="member-color" class="tint-select"></select></label><button class="button primary" type="submit">추가</button></form></dialog>
   <div class="status" role="status" id="status" hidden></div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script><script src="supabase-config.js" defer></script><script src="calendar.js" defer></script><script src="shared-calendar.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script><script src="supabase-config.js" defer></script><script src="calendar.js?v=2" defer></script><script src="shared-calendar.js" defer></script>
 </body>
 </html>

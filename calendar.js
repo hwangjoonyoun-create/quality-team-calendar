@@ -9,7 +9,7 @@ const koreaDate = new Intl.DateTimeFormat('sv-SE', {timeZone:zone, year:'numeric
 const displayDate = new Intl.DateTimeFormat('ko-KR', {month:'long', day:'numeric', weekday:'short', timeZone:'UTC'});
 const kinds = {
   WE:['WE · 비행','#dbe9fd'], SIM:['SIM','#eadff8'], FTD:['FTD','#e5eafa'], STFF:['STFF','#dcf4dd'],
-  '지상교육':['지상교육','#fbe6cf'], '회의':['회의','#f9e0dc'], '연차':['연차','#d7edf2'], OFF:['OFF','#e9edf1'],
+  '지상교육':['지상교육','#f5ebe0'], '회의':['회의','#f9e0dc'], '연차':['연차','#d7edf2'], OFF:['OFF','#e9edf1'],
   AUDIT:['AUDIT','#e0e9cc'], '행사':['행사','#fadfee'], ICDN:['ICDN','#f8ead8'], custom:['직접입력','#e9edf4']
 };
 const legacyKinds = {
