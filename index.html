@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="품질팀 월간 일정 캘린더">
+  <title>품질팀 일정 캘린더</title>
+  <style>
+    :root{font-family:Inter,'Pretendard','Malgun Gothic',system-ui,sans-serif;color:#172b47;background:#f2f6fc;--navy:#112747;--blue:#255cdb;--line:#dce6f3;--muted:#526782;--today:#2454ae}
+    *{box-sizing:border-box}body{margin:0}button,select,input{font:inherit}button,select{cursor:pointer}button:disabled{cursor:default;opacity:.45}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}h1,h2,p{margin:0}[hidden]{display:none!important}
+    .top{background:var(--navy);color:#fff}.top-inner,.shell{width:min(1560px,100%);margin:auto;padding-inline:clamp(13px,2.6vw,40px)}.top-inner{height:65px;display:flex;align-items:center;gap:12px}.brand{font-weight:800;letter-spacing:-.02em}.demo{margin-left:auto;color:#deebff;font-size:.78rem;border:1px solid #456383;padding:5px 11px;border-radius:999px}
+    .shell{padding-top:23px;padding-bottom:36px}.page-head,.month-head,.month-actions,.popup-head,.actions{display:flex;align-items:center;gap:8px}.page-head,.month-head,.popup-head{justify-content:space-between}.page-head{margin-bottom:21px;flex-wrap:wrap;row-gap:12px}h1{font-size:clamp(1.6rem,3vw,2.12rem);letter-spacing:-.065em}h2{font-size:1.25rem;letter-spacing:-.045em}.button{display:inline-flex;align-items:center;justify-content:center;min-height:37px;border:1px solid #d4e1f1;background:#fff;color:inherit;border-radius:8px;padding:6px 11px;font-size:.875rem;font-weight:750;white-space:nowrap}.button:hover{background:#edf3fb}.primary{background:var(--blue);border-color:var(--blue);color:#fff}.primary:hover{background:#194bc4}.button.icon{width:36px;padding:0}.button.icon svg{width:15px;height:15px}.danger{color:#a7213d;background:#fff3f5}.month-head{padding:14px 18px}.calendar{border:1px solid #d6e2f1;border-radius:14px;background:#fff;box-shadow:0 3px 0 #e5edf7;overflow:hidden}.scroll{overflow:auto}.calendar-table{border-collapse:separate;border-spacing:0;width:100%;min-width:735px;table-layout:fixed}.name-col{width:clamp(100px,11%,160px)}th,td{padding:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}.calendar-table tr> :last-child{border-right:0}.calendar-table tbody:last-child tr:last-child>*{border-bottom:0}.weekday th{height:36px;background:#eaf1fa;text-align:center;border-top:1px solid var(--line);font-size:.875rem}.weekday th:first-child{text-align:left;padding-left:13px}.sunday{color:#a73050}.saturday{color:#2855a4}.date-row th{height:29px;background:#f3f7fb;border-top:1px solid #c4d4e9;font-size:.875rem}.date-row .today-cell{border-top:3px solid var(--today);background:#e8f0ff}.today-cell{box-shadow:inset 3px 0 var(--today),inset -3px 0 var(--today);border-right:0!important}.today-end{box-shadow:inset 3px 0 var(--today),inset -3px 0 var(--today),inset 0 -3px var(--today)}.outside,.member-row .outside{background:#f8fafd;color:#70839c}.member-row>*{height:31px;background:color-mix(in srgb,var(--person) 8%,white)}.member-row th{font-weight:750;font-size:.875rem;padding:0 12px;overflow-wrap:anywhere}.member-row td{padding:2px 7px}.member-row th,.weekday th:first-child,.date-row th:first-child{position:sticky;left:0;z-index:1}.member-row th{background:color-mix(in srgb,var(--person) 8%,white)}.slot{display:flex;align-items:center;gap:4px;overflow:auto;scrollbar-width:none;height:25px}.slot::-webkit-scrollbar{display:none}.chip{border:0;color:#172b47;background:var(--kind,#e9eef6);border-radius:5px;min-width:0;max-width:100%;flex:none;padding:3px 7px;font-size:.875rem;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chip:hover{filter:brightness(.96)}.slot .chip:only-child{flex:1;text-align:left}.cell-active{outline:2px solid var(--blue);outline-offset:-4px}.empty-state{padding:12px 16px;color:var(--muted);font-size:.875rem}
+    .popup,.modal{border:1px solid #aec2df;border-radius:13px;background:#fff;color:inherit;box-shadow:0 8px 28px #1d36582b;padding:15px;width:min(325px,calc(100vw - 20px));z-index:5}.popup{position:fixed}.popup::before{content:"";position:absolute;top:-6px;left:var(--pointer,36px);width:10px;height:10px;background:white;border-left:1px solid #aec2df;border-top:1px solid #aec2df;transform:rotate(45deg)}.popup.above::before{top:auto;bottom:-6px;transform:rotate(225deg)}.popup-head{margin-bottom:12px}.popup h2{font-size:1rem}.close{border:0;background:transparent;color:var(--muted);font-size:1.35rem;line-height:1;padding:1px 4px;cursor:pointer}.fields{display:grid;gap:10px}.field{display:grid;gap:5px;font-size:.875rem;font-weight:750}.field input,.field select{width:100%;min-width:0;max-width:100%;min-height:38px;padding:6px 8px;border:1px solid #c7d6ed;border-radius:8px;background:#fff;color:inherit}
+    .field select{padding-right:5px}
+    .actions{justify-content:flex-end;margin-top:3px}.actions .danger{margin-right:auto}.modal{width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:18px}.modal::backdrop{background:#11274775}.member-edit{display:grid;grid-template-columns:20px minmax(0,1fr) auto auto auto auto;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}.member-edit .button{min-height:30px;padding:3px 6px}.add-member{display:grid;grid-template-columns:1fr 65px auto;gap:8px;align-items:end;margin-top:14px}.status{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);z-index:8;background:var(--navy);color:white;border-radius:8px;padding:8px 12px;font-size:.875rem;max-width:calc(100vw - 24px)}
+    @media(max-width:690px){.top-inner{height:53px}.shell{padding-top:17px}.page-head{margin-bottom:13px}.month-head{padding:9px 10px}.button{padding-inline:8px}.name-col{width:90px}.member-row th{padding-inline:7px}.calendar-table{min-width:620px}}
+    .shell{max-width:1120px}
+    .name-col{width:var(--name-width,6rem)}
+    .calendar-table{min-width:var(--table-min,41rem)}
+    .weekday th:first-child,.member-row th{text-align:center;padding-inline:5px}
+    .manage-button{display:block;width:100%;min-height:31px;padding:3px 0;border:0;border-radius:5px;background:transparent;color:#244e96;font-size:.875rem;font-weight:800;white-space:nowrap}
+    .manage-button:hover{background:#dce8fb}
+    .member-row>*,.member-row th{background:var(--person,#f0f5ff)}
+    .member-row:hover>*,.member-row:has(:focus-visible)>*{background:color-mix(in srgb,var(--person) 89%,#627da7)}
+    .member-row:hover .chip,.member-row:has(:focus-visible) .chip{background:color-mix(in srgb,var(--kind,#e9eef6) 88%,#6c83aa)}
+    .member-row td:not(.outside){cursor:pointer}
+    .member-row td.outside{background:#f8fafd;cursor:default}
+    .slot{height:26px}
+    .cell-open{width:100%;height:100%;border:0;background:transparent;border-radius:5px}
+    .date-label{display:block;padding:4px 8px;font-size:.875rem;font-weight:800}
+    .today-cell .date-label{color:var(--today)}
+    .member-edit{grid-template-columns:20px minmax(0,1fr) clamp(58px,16vw,83px) auto auto auto}
+    .member-edit .member-name-input{min-width:0;width:100%;height:32px;padding:4px 7px;border:1px solid #d4e1f1;border-radius:6px;color:inherit}
+    .member-identity{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px}
+    .tint-select,.field .tint-select{background:var(--tint,white);border:1px solid #cddbeb;border-radius:6px;color:inherit;font-size:.82rem;max-width:100%;padding:4px 2px;min-height:31px;appearance:auto}
+    .add-member{grid-template-columns:1fr 88px auto}
+    .add-member .tint-select{min-height:38px}
+    .popup .actions{flex-wrap:wrap}
+    .popup .actions .danger{margin-right:0}
+    .popup .actions .secondary-add{margin-right:auto}
+    .popup{width:min(370px,calc(100vw - 20px))}
+    .event-fields{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);width:100%;max-width:300px;gap:8px}
+    .event-fields .field{min-width:0}
+    .event-fields:has(#detail-field[hidden]){grid-template-columns:minmax(0,126px)}
+    .weekday th,.member-row th,.date-label,.chip,.manage-button{font-size:12px;font-weight:400}
+    .weekday th,.date-label,.manage-button{font-weight:700}
+    .date-row th{background:#e4edfa}
+    .date-row th.outside{background:#eef3fa}
+    .date-row .today-cell{background:#d7e5ff}
+    .calendar-table tr> :first-child{border-right:2px solid #8fa6c4}
+    .calendar-table tbody:not(:last-child) tr:last-child>*{border-bottom:0}
+    .calendar-table tbody+tbody .date-row th:not(.today-cell){border-top:2px solid #8fa6c4}
+    .top{background:linear-gradient(105deg,#0e2344 12%,#1c4277);border-bottom:1px solid #4978ad}
+    .brand{display:flex;align-items:center;gap:10px;white-space:nowrap;font-weight:400}
+    .brand-logo{width:auto;height:.9em;display:block;flex:none}
+    .brand-en{color:#d6e8ff;border-left:1px solid #6285af;padding-left:10px;font-size:.9375rem}
+    .top-inner{position:relative;isolation:isolate}
+    .top-inner::before{content:"";position:absolute;z-index:-1;inset:0 clamp(60px,12vw,155px) 0 auto;width:clamp(155px,34vw,440px);pointer-events:none;opacity:.48;background:url("parata-aircraft.jpg") center 52% / 100% auto no-repeat;mask-image:radial-gradient(ellipse closest-side at 53% 52%,#000 28%,#000c 60%,transparent 100%)}
+    .shell{padding-top:14px}
+    @media(max-width:420px){.brand{gap:8px}.brand-en{padding-left:8px;font-size:.875rem}.top-inner::before{right:42px;opacity:.23}}
+    @media(max-width:690px){.calendar-table{min-width:var(--table-min,41rem)}.member-edit{column-gap:3px}.member-edit .button{padding-inline:4px}}
+  .connect-panel{width:min(390px,calc(100% - 28px));margin:32px auto;background:#fff;border:1px solid #d6e2f1;border-radius:14px;padding:20px;box-shadow:0 3px 0 #e5edf7}
+.connect-status{font-size:.875rem;color:#435d7c;margin-top:12px;line-height:1.5}
+.slot.two-entries .chip{flex:1 1 0;text-align:left}
+</style>
+<meta name="theme-color" content="#112747"><meta name="apple-mobile-web-app-title" content="품질팀 일정"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
+</head>
+<body>
+  <header class="top"><div class="top-inner"><img class="brand-logo" src="parata-symbol-white.png" alt="" width="192" height="147"><span class="brand">품질팀 <span class="brand-en" lang="en">Quality Team</span></span></div></header>
+  <section class="connect-panel" id="connect-panel" aria-label="공동 일정 연결"><p class="connect-status" id="connect-status" role="status">공동 일정을 불러오는 중입니다.</p><button class="button" id="connect-retry" type="button" hidden>다시 불러오기</button></section>
+<main class="shell" id="calendar-page" hidden>
+    <section class="calendar" id="calendar" aria-labelledby="month"><div class="month-head"><h2 id="month" aria-live="polite"></h2><div class="month-actions"><button class="button" id="today" type="button">오늘</button><button class="button icon" id="prev" type="button" aria-label="이전 달"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 3-5 5 5 5"/></svg></button><button class="button icon" id="next" type="button" aria-label="다음 달"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 3 5 5-5 5"/></svg></button></div></div><div class="scroll" id="scroll"><table class="calendar-table" id="grid"></table></div><p class="empty-state" id="empty" hidden>팀원 관리에서 표시할 팀원을 선택하세요.</p></section>
+  </main>
+  <section class="popup" id="popup" role="dialog" aria-labelledby="popup-title" hidden><div class="popup-head"><h2 id="popup-title"></h2><button class="close" id="close-popup" type="button" aria-label="닫기">×</button></div><form class="fields" id="event-form"><div class="event-fields"><label class="field">일정 종류<select id="type" required></select></label><label class="field" id="detail-field" hidden><span id="detail-label"></span><input id="detail" type="text" maxlength="60" autocomplete="off"></label></div><div class="actions"><button class="button secondary-add" type="button" id="another-event" hidden>다른 일정 입력</button><button class="button danger" type="button" id="delete-event" hidden>삭제</button><button class="button primary" id="save-event" type="submit">저장</button></div></form></section>
+  <dialog class="modal" id="members" aria-labelledby="members-title"><div class="popup-head"><h2 id="members-title">팀원 관리</h2><button class="close" id="close-members" type="button" aria-label="닫기">×</button></div><div id="member-rows"></div><form class="add-member" id="member-form"><label class="field">팀원 이름<input id="member-name" maxlength="22" required autocomplete="off"></label><label class="field">배경색<select id="member-color" class="tint-select"></select></label><button class="button primary" type="submit">추가</button></form></dialog>
+  <div class="status" role="status" id="status" hidden></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script><script src="supabase-config.js" defer></script><script src="calendar.js" defer></script><script src="shared-calendar.js" defer></script>
+</body>
+</html>
