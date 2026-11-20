@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="description" content="품질팀 월간 일정 캘린더">
   <title>품질팀 일정 캘린더</title>
   <style>
@@ -83,8 +83,17 @@
 .mode-switch button:focus-visible{outline-color:#fff}
 @media(max-width:690px){.top-inner{height:45px;gap:8px}.month-head{padding-block:8px}}
 @media(max-width:355px){.mode-switch button{padding-inline:7px}}
+/* Keep iPhone's home-screen status area separate from the scrolling calendar. */
+@media(display-mode:standalone){
+  body{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+  .top{flex:none;padding-top:env(safe-area-inset-top,0px);background:#112747}
+  .top-inner{padding-left:max(13px,env(safe-area-inset-left));padding-right:max(13px,env(safe-area-inset-right))}
+  .top-inner::before{display:none}
+  .shell{min-height:0;flex:1;overflow:auto;overscroll-behavior-y:contain;padding-bottom:max(31px,env(safe-area-inset-bottom))}
+}
 </style>
 <meta name="theme-color" content="#112747"><meta name="apple-mobile-web-app-title" content="품질팀 일정"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
   <header class="top"><div class="top-inner"><img class="brand-logo" src="parata-symbol-white.png" alt="" width="192" height="147"><span class="brand">품질팀 <span class="brand-en" lang="en">Quality Team</span></span><div class="mode-switch" role="group" aria-label="일정 화면 모드"><button id="view-mode" type="button" aria-pressed="false">읽기</button><button id="edit-mode" type="button" aria-pressed="false">입력</button></div></div></header>
