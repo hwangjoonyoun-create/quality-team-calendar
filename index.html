@@ -62,11 +62,32 @@
   .connect-panel{width:min(390px,calc(100% - 28px));margin:32px auto;background:#fff;border:1px solid #d6e2f1;border-radius:14px;padding:20px;box-shadow:0 3px 0 #e5edf7}
 .connect-status{font-size:.875rem;color:#435d7c;margin-top:12px;line-height:1.5}
 .slot.two-entries .chip{flex:1 1 0;text-align:left}
+.top-inner{height:55px}
+.shell{padding-top:12px;padding-bottom:31px}
+.month-head{padding-block:12px}
+.month-actions .button{min-height:32px;padding-block:5px}
+.weekday th{height:31px}
+.manage-button{min-height:26px}
+.date-row th{height:25px}
+.date-label{padding-block:3px}
+.member-row>*{height:26px}
+.member-row td{padding-block:1px}
+.slot{height:22px}
+.chip{padding-block:2px}
+.read-only .member-row td,.read-only .manage-button{cursor:default}
+.read-only .chip:hover{filter:none}
+.read-only .manage-button:hover{background:transparent}
+.mode-switch{margin-left:auto;display:grid;grid-template-columns:1fr 1fr;flex:none;padding:2px;gap:2px;border-radius:999px;background:#ffffff36}
+.mode-switch button{border:0;border-radius:inherit;background:transparent;color:white;padding:5px 11px;min-height:26px;font-size:.8125rem;line-height:1.2;white-space:nowrap}
+.mode-switch button[aria-pressed=true]{color:var(--navy);background:#fff}
+.mode-switch button:focus-visible{outline-color:#fff}
+@media(max-width:690px){.top-inner{height:45px;gap:8px}.month-head{padding-block:8px}}
+@media(max-width:355px){.mode-switch button{padding-inline:7px}}
 </style>
 <meta name="theme-color" content="#112747"><meta name="apple-mobile-web-app-title" content="품질팀 일정"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png">
 </head>
 <body>
-  <header class="top"><div class="top-inner"><img class="brand-logo" src="parata-symbol-white.png" alt="" width="192" height="147"><span class="brand">품질팀 <span class="brand-en" lang="en">Quality Team</span></span></div></header>
+  <header class="top"><div class="top-inner"><img class="brand-logo" src="parata-symbol-white.png" alt="" width="192" height="147"><span class="brand">품질팀 <span class="brand-en" lang="en">Quality Team</span></span><div class="mode-switch" role="group" aria-label="일정 화면 모드"><button id="view-mode" type="button" aria-pressed="false">읽기</button><button id="edit-mode" type="button" aria-pressed="false">입력</button></div></div></header>
   <section class="connect-panel" id="connect-panel" aria-label="공동 일정 연결"><p class="connect-status" id="connect-status" role="status">공동 일정을 불러오는 중입니다.</p><button class="button" id="connect-retry" type="button" hidden>다시 불러오기</button></section>
 <main class="shell" id="calendar-page" hidden>
     <section class="calendar" id="calendar" aria-labelledby="month"><div class="month-head"><h2 id="month" aria-live="polite"></h2><div class="month-actions"><button class="button" id="today" type="button">오늘</button><button class="button icon" id="prev" type="button" aria-label="이전 달"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 3-5 5 5 5"/></svg></button><button class="button icon" id="next" type="button" aria-label="다음 달"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 3 5 5-5 5"/></svg></button></div></div><div class="scroll" id="scroll"><table class="calendar-table" id="grid"></table></div><p class="empty-state" id="empty" hidden>팀원 관리에서 표시할 팀원을 선택하세요.</p></section>

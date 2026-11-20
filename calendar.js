@@ -8,8 +8,8 @@ const zone = 'Asia/Seoul';
 const koreaDate = new Intl.DateTimeFormat('sv-SE', {timeZone:zone, year:'numeric', month:'2-digit', day:'2-digit'});
 const displayDate = new Intl.DateTimeFormat('ko-KR', {month:'long', day:'numeric', weekday:'short', timeZone:'UTC'});
 const kinds = {
-  WE:['WE · 비행','#dbe9fd'], SIM:['SIM','#eadff8'], FTD:['FTD','#e5eafa'], STFF:['STFF','#fbe6cf'],
-  '지상교육':['지상교육','#fff0c8'], '회의':['회의','#f9e0dc'], '연차':['연차','#d7edf2'], OFF:['OFF','#dcefe6'],
+  WE:['WE · 비행','#dbe9fd'], SIM:['SIM','#eadff8'], FTD:['FTD','#e5eafa'], STFF:['STFF','#dcf4dd'],
+  '지상교육':['지상교육','#fbe6cf'], '회의':['회의','#f9e0dc'], '연차':['연차','#d7edf2'], OFF:['OFF','#e9edf1'],
   AUDIT:['AUDIT','#e0e9cc'], '행사':['행사','#fadfee'], ICDN:['ICDN','#f8ead8'], custom:['직접입력','#e9edf4']
 };
 const legacyKinds = {
@@ -43,6 +43,7 @@ let currentMonth = dateObject(today());
 let todayShown = today();
 let active = null;
 let toast;
+let readOnly = window.matchMedia('(pointer: coarse)').matches;
 
 function load() {
   try {
@@ -134,7 +135,7 @@ function redraw() {
   const thead=make('thead');
   const dayHead=make('tr',undefined,'weekday');
   const teamHeader=make('th');
-  const manage=button('팀원 관리','manage-button',()=>{
+  const manage=readOnly ? make('span','팀원 관리','manage-button') : button('팀원 관리','manage-button',()=>{
     closePopup();
     renderMembers();
     $('members').showModal();
@@ -188,19 +189,19 @@ function redraw() {
           cell.dataset.entryDate=key;
           cell.dataset.memberId=member.id;
           const open=(entry,trigger)=>openPopup(member.id,key,cell,entry,trigger);
-          cell.addEventListener('click',event=>{
+          if (!readOnly) cell.addEventListener('click',event=>{
             if (event.target.closest('button')) return;
             open(cellEntries[0],slot.querySelector('button'));
           });
           for (const entry of cellEntries) {
             const label=entryLabel(entry);
-            const chip=button(label,'chip',()=>open(entry,chip),`${member.name} ${displayDate.format(day)} ${label}`);
+            const chip=readOnly ? make('span',label,'chip') : button(label,'chip',()=>open(entry,chip),`${member.name} ${displayDate.format(day)} ${label}`);
             chip.dataset.entryId=entry.id;
             chip.title=label;
             chip.style.setProperty('--kind',(kinds[entry.type] ?? legacyKinds[entry.type] ?? kinds.custom)[1]);
             slot.append(chip);
           }
-          if (!cellEntries.length) {
+          if (!readOnly && !cellEntries.length) {
             const openCell=button('','cell-open',()=>open(undefined,openCell),`${member.name} ${displayDate.format(day)} 일정 입력`);
             slot.append(openCell);
           }
@@ -258,6 +259,7 @@ function syncDetail() {
 }
 
 function openPopup(member,date,cell,entry,trigger) {
+  if (readOnly) return;
   closePopup();
   active={member,date,cell,id:entry?.id,trigger};
   cell.classList.add('cell-active');
@@ -455,6 +457,8 @@ $('close-popup').addEventListener('click',()=>closePopup(true));
 $('today').addEventListener('click',()=>changeMonth(null));
 $('prev').addEventListener('click',()=>changeMonth(-1));
 $('next').addEventListener('click',()=>changeMonth(1));
+$('view-mode').addEventListener('click',()=>setMode(true));
+$('edit-mode').addEventListener('click',()=>setMode(false));
 document.addEventListener('keydown',event=>{ if (active && event.key==='Escape') closePopup(true); });
 document.addEventListener('pointerdown',event=>{
   if (active && !$('popup').contains(event.target) && !active.cell.contains(event.target)) closePopup();
@@ -472,7 +476,19 @@ function updateToday() {
   redraw();
 }
 
-redraw();
+function setMode(next) {
+  if (next) {
+    closePopup();
+    if ($('members').open) $('members').close();
+  }
+  readOnly=next;
+  $('calendar').classList.toggle('read-only',next);
+  $('view-mode').setAttribute('aria-pressed',String(next));
+  $('edit-mode').setAttribute('aria-pressed',String(!next));
+  redraw();
+}
+
+setMode(readOnly);
 
 window.qualityCalendar = {
   replaceSharedState(next) {
